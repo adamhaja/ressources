@@ -1,0 +1,44 @@
+policy_module(mini_httpd, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+type mini_httpd_t;
+type mini_httpd_exec_t;
+init_daemon_domain(mini_httpd_t, mini_httpd_exec_t)
+
+#permissive mini_httpd_t;
+
+type mini_httpd_log_t;
+logging_log_file(mini_httpd_log_t)
+
+type mini_httpd_varwww_t;
+type mini_httpd_cgi_t;
+
+########################################
+#
+# mini_httpd local policy
+#
+allow mini_httpd_t self:capability { setgid setuid sys_chroot };
+allow mini_httpd_t self:process { fork };
+allow mini_httpd_t self:fifo_file rw_fifo_file_perms;
+allow mini_httpd_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(mini_httpd_t, mini_httpd_log_t, mini_httpd_log_t)
+manage_files_pattern(mini_httpd_t, mini_httpd_log_t, mini_httpd_log_t)
+manage_lnk_files_pattern(mini_httpd_t, mini_httpd_log_t, mini_httpd_log_t)
+logging_log_filetrans(mini_httpd_t, mini_httpd_log_t, { dir file lnk_file })
+
+domain_use_interactive_fds(mini_httpd_t)
+
+files_read_etc_files(mini_httpd_t)
+
+auth_use_nsswitch(mini_httpd_t)
+
+logging_send_syslog_msg(mini_httpd_t)
+
+miscfiles_read_localization(mini_httpd_t)
+
+sysnet_dns_name_resolve(mini_httpd_t)

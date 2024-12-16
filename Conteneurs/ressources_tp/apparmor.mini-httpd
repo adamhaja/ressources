@@ -1,0 +1,34 @@
+# Profil AppArmor pour le TP du master SeCReTS
+
+#/usr/sbin/mini_httpd flags=(complain) {
+/usr/sbin/mini_httpd {
+
+network inet stream,
+network inet dgram,
+network inet6 stream,
+network inet6 dgram,
+
+unix (create),
+
+capability net_bind_service,
+capability setuid,
+capability setgid,
+
+signal (receive) peer=unconfined,
+
+/usr/lib{,64}/**/lib*.so* mr,
+/bin/* ixr,
+/usr/bin/* ixr,
+
+/etc/passwd r,
+/etc/localtime r,
+/etc/ld.so.cache r,
+
+/var/www/wwwroot/ r,
+/var/www/wwwroot/** r,
+/var/www/wwwroot/index.sh ixr,
+
+/var/log/mini_httpd.log w,
+
+}
+

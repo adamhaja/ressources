@@ -1,0 +1,12 @@
+* Compiler le code source https://moutane.net/enseirb/se/ressources_tp/vuln1.c
+  * gcc -o vuln1 vuln1.c
+
+* Mettre en évidence les protections à la compilation (utiliser objdump) :
+  * Pile non exécutable
+  * Stack Protector
+
+* Autres protections :
+  * ASLR :
+    * cat /proc/self/maps
+    * /proc/sys/kernel/randomize_va_space
+

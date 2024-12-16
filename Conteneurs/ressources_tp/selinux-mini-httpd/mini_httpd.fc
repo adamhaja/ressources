@@ -1,0 +1,7 @@
+/usr/sbin/mini_httpd		--	gen_context(system_u:object_r:mini_httpd_exec_t,s0)
+
+/var/log/mini_httpd.log		--	gen_context(system_u:object_r:mini_httpd_log_t,s0)
+
+/var/www/wwwroot(/.*)?          gen_context(system_u:object_r:mini_httpd_varwww_t,s0)
+/var/www/wwwroot/index.sh       --      gen_context(system_u:object_r:mini_httpd_cgi_t,s0)
+
